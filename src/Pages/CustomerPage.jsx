@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import customersAPI from "../services/custumersAPI";
 
 const CustomerPage = (props) => {
 
@@ -7,7 +8,7 @@ const CustomerPage = (props) => {
 
 
     useEffect(() => {
-        axios.get("http://localhost:8000/api/customers").then((response) => response.data).then((data) => setCustomers(data)).catch(error=>console.log(error.response));
+       customersAPI.findAll().then((data) => setCustomers(data)).catch(error=>console.log(error.response));
     },[])
 
     const handleDelete = id =>{
@@ -51,7 +52,7 @@ const CustomerPage = (props) => {
                         </td>
                     <td className="text-center">{customer.totalAmount.toLocaleString()} FCFA </td> 
                     <td>
-                        <button className="btn btn-sm btn-danger" onClick={()=>handleDelete(customer.id)}>Supprimer</button>
+                        <button className="btn btn-sm btn-danger" disabled={customer.invoices>0} onClick={()=>handleDelete(customer.id)}>Supprimer</button>
                     </td>
                 </tr>
                 
