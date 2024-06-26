@@ -9,13 +9,15 @@ function App() {
   return (
     <HashRouter>
     <Navbar/>
-    <div className="container bg-primary">
+    <div className="container">
 
       <Routes>
         <Route path='/customers' element={<CustomerPage/>}></Route>
         <Route path='/' element={<HomePage/>}></Route>
       </Routes>
+
     </div>
+    
     </HashRouter>
   );
 }
