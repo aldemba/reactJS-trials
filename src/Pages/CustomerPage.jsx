@@ -3,7 +3,7 @@ import customersAPI from "../services/custumersAPI";
 
 const CustomerPage = (props) => {
 
-    const[customers, setCustomers] = useState([]);
+    const [customers, setCustomers] = useState([]);
 
     const fetchCustomers = async () => {
         try {
