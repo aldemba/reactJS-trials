@@ -4,6 +4,11 @@ import customersAPI from "../services/custumersAPI";
 const CustomerPage = (props) => {
 
     const [customers, setCustomers] = useState([]);
+    const [currentPage, setcurrentPage]=useState(1);
+
+    const handlePageChange= (page)=>{
+        setcurrentPage(page);
+    }
 
     const fetchCustomers = async () => {
         try {
@@ -36,6 +41,7 @@ const CustomerPage = (props) => {
 
     }
 
+ 
 
     //methode 2 pour supprimer
 
@@ -50,31 +56,18 @@ const CustomerPage = (props) => {
     //     })
     // }
 
-//     <div>
-//   <ul class="pagination pagination-sm">
-//     <li class="page-item disabled">
-//       <a class="page-link" href="#">&laquo;</a>
-//     </li>
-//     <li class="page-item active">
-//       <a class="page-link" href="#">1</a>
-//     </li>
-//     <li class="page-item">
-//       <a class="page-link" href="#">2</a>
-//     </li>
-//     <li class="page-item">
-//       <a class="page-link" href="#">3</a>
-//     </li>
-//     <li class="page-item">
-//       <a class="page-link" href="#">4</a>
-//     </li>
-//     <li class="page-item">
-//       <a class="page-link" href="#">5</a>
-//     </li>
-//     <li class="page-item">
-//       <a class="page-link" href="#">&raquo;</a>
-//     </li>
-//   </ul>
-// </div>
+    const itemsPerPage = 10;
+    const pageCount = Math.ceil(customers.length/itemsPerPage);
+    const pages=[]
+    for (let i = 1; i <= pageCount; i++) {
+         pages.push(i);
+        
+    }
+    const start= currentPage * itemsPerPage -itemsPerPage
+    const paginatedCustomers= customers.slice(start, start +itemsPerPage)
+
+
+    console.log(pages);
 
 
     return (  
@@ -93,7 +86,7 @@ const CustomerPage = (props) => {
                 </tr>
             </thead>
             <tbody>
-                {customers.map((customer) => 
+                {paginatedCustomers.map((customer) => 
                 
                 <tr key={customer.id}>
                     <td>{customer.id}</td>
@@ -114,6 +107,21 @@ const CustomerPage = (props) => {
                 )}
             </tbody>
         </table>
+        <div>
+  <ul className="pagination pagination-sm">
+    <li className={"page-item " + (currentPage === 1 && " disabled" ) } onClick={()=>handlePageChange(currentPage -1)} >
+      <button className="page-link" >&laquo;</button>
+    </li>
+   {pages.map(page => (
+     <li className={"page-item" + (currentPage === page && " active" )} key={page}>
+     <button className="page-link" onClick={()=>handlePageChange(page)} >{page}</button>
+   </li>
+   ))}
+    <li className={"page-item " + (currentPage === pageCount && " disabled" )} onClick={()=>handlePageChange(currentPage +1)}>
+      <button >&raquo;</button>
+    </li>
+  </ul>
+</div>
         </>
     );
 }

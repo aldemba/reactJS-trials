@@ -44,6 +44,10 @@ const  InvoicePage = (props) => {
         }
     }
 
+    // const formatDate =(temps)=>{
+    //     moment(temps).format("DD/MM/YYYY")
+    // }
+
 
 
 
